@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaction Design Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+        
+        /* Interactive Example Styles */
+        .interactive-example {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+            text-align: left;
+        }
+        
+        .color-picker {
+            grid-column: 1 / -1;
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .color-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .color-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .color-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .preview-box {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .preview-header {
+            padding: 10px 15px;
+            font-weight: bold;
+            color: white;
+            background: #3498db;
+            transition: background-color 0.3s;
+        }
+        
+        .preview-content {
+            padding: 20px;
+        }
+        
+        .preview-content h4 {
+            margin-bottom: 15px;
+            color: #3498db;
+            transition: color 0.3s;
+        }
+        
+        .action-btn {
+            margin-top: 15px;
+            padding: 8px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .interaction-log {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        #log-entries {
+            margin-top: 10px;
+            height: 150px;
+            overflow-y: auto;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .presentation-container {
+            width: 90%;
+            max-width: 800px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px 40px;
+            min-height: 500px;
+            text-align: center;
+            position: relative;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .slide h2 {
+            font-size: 2em;
+            color: #34495e;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .slide h3 {
+            font-size: 1.5em;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+
+        .slide ul {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+            list-style: none;
+        }
+
+        .slide li {
+            margin: 15px 0;
+            padding: 10px 0 10px 30px;
+            position: relative;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .slide li::before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .slide li strong {
+            color: #2c3e50;
+        }
+
+        .title-slide {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+
+        .title-slide h1 {
+            color: white;
+            font-size: 3.5em;
+            margin-bottom: 20px;
+        }
+
+        .process-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+            gap: 20px;
+        }
+
+        .process-step {
+            background: #3498db;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            position: relative;
+            margin: 10px;
+        }
+
+        .process-step::after {
+            content: "→";
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #3498db;
+            font-size: 20px;
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            background: #ecf0f1;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .pros, .cons {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .cons {
+            border-left-color: #e74c3c;
+        }
+
+        .highlight-box {
+            background: #e8f4f8;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 20px;
+                min-height: 400px;
+            }
+
+            .slide h1 {
+                font-size: 2em;
+            }
+
+            .title-slide h1 {
+                font-size: 2.5em;
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+
+            .process-diagram {
+                flex-direction: column;
+            }
+
+            .process-step::after {
+                content: "↓";
+                right: 50%;
+                bottom: -30px;
+                top: auto;
+                transform: translateX(50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <h1>Interaction Design</h1>
+            <p style="font-size: 1.2em; margin-top: 30px;">Understanding and Creating Meaningful User Experiences</p>
+        </div>
+
+        <!-- Slide 2: What is Design? -->
+        <div class="slide">
+            <h2>What is Design?</h2>
+            <ul>
+                <li><strong>Interaction design:</strong> Understanding and choosing how a thing is going to affect the way people work.</li>
+                <li><strong>Core of Design:</strong> Achieving goals within constraints.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Goals in Design -->
+        <div class="slide">
+            <h2>Goals in Design</h2>
+            <ul>
+                <li><strong>Purpose:</strong> What is the object meant to do?</li>
+                <li><strong>Audience:</strong> Who is it for?</li>
+                <li><strong>Motivation:</strong> Why do they want or need it?</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Constraints in Design -->
+        <div class="slide">
+            <h2>Constraints in Design</h2>
+            <ul>
+                <li><strong>Materials:</strong> What will we use to build it?</li>
+                <li><strong>Standards:</strong> What established guidelines must we follow?</li>
+                <li><strong>Cost:</strong> What is the budget?</li>
+                <li><strong>Time:</strong> How much time is available for development?</li>
+                <li><strong>Health / Safety / Legal:</strong> What regulations or issues must be considered?</li>
+            </ul>
+        </div>
+
+        <!-- Slide 5: Trade-offs in Design -->
+        <div class="slide">
+            <h2>Trade-offs in Design</h2>
+            <div class="highlight-box">
+                <h3>Balancing Act</h3>
+                <p>Which goals or constraints can be relaxed or adjusted?</p>
+            </div>
+            <p style="font-size: 1.2em; margin-top: 30px;">Compromise is often a key part of the design process.</p>
+        </div>
+
+        <!-- Slide 6: The Design Process Overview -->
+        <div class="slide">
+            <h2>The Design Process Overview</h2>
+            <div class="process-diagram">
+                <div class="process-step">Analysis</div>
+                <div class="process-step">Design</div>
+                <div class="process-step">Prototype</div>
+                <div class="process-step">Implement</div>
+            </div>
+            <ul>
+                <li><strong>Starting Point:</strong> What is wanted? (Interviews, Ethnography)</li>
+                <li><strong>Analysis:</strong> Task analysis, Scenarios</li>
+                <li><strong>Design:</strong> Guidelines, Principles, Specifications</li>
+                <li><strong>Prototype:</strong> Evaluation heuristics</li>
+                <li><strong>Implementation:</strong> Architectures, Documentation, Help systems</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: Know Thy Users -->
+        <div class="slide">
+            <h2>Know Thy Users</h2>
+            <h3>Stakeholders: Anyone affected by the system, directly or indirectly</h3>
+            <ul>
+                <li><strong>Talk to them:</strong> Engage in participatory design.</li>
+                <li><strong>Watch them:</strong> Observe their behaviors and context (ethnography).</li>
+                <li><strong>Use your imagination:</strong> Empathize with their needs and perspectives.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 8: The Power of Scenarios -->
+        <div class="slide">
+            <h2>The Power of Scenarios</h2>
+            <ul>
+                <li><strong>Stories for Design:</strong> Scenarios are narratives that illustrate user interactions.</li>
+                <li><strong>Rich Stories for Interaction:</strong> They provide detailed context about how users will engage with the product.</li>
+                <li><strong>Examples:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>A user intends to save their work.</li>
+                        <li>A user intends to quit an application.</li>
+                        <li>A user wants to watch a movie.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Slide 9: Uses of Scenarios -->
+        <div class="slide">
+            <h2>Uses of Scenarios</h2>
+            <ul>
+                <li><strong>Communication:</strong> Share understanding and ideas with team members and stakeholders.</li>
+                <li><strong>Validation:</strong> Check other design models against realistic user interactions.</li>
+                <li><strong>Expressing Dynamics:</strong> Show how the system behaves and responds over time and through different user actions.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 10: Scenarios: Pros and Cons -->
+        <div class="slide">
+            <h2>Scenarios: Pros and Cons</h2>
+            <div class="pros-cons">
+                <div class="pros">
+                    <h3>Pros</h3>
+                    <p>Clearly depict a linear sequence of events (time is linear).</p>
+                </div>
+                <div class="cons">
+                    <h3>Cons</h3>
+                    <p>May not inherently show alternative paths or decision branches.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Navigation Design Principles -->
+        <div class="slide">
+            <h2>Navigation Design Principles</h2>
+            <p style="margin-bottom: 20px;">Interaction occurs at multiple levels:</p>
+            <ul>
+                <li><strong>Widgets:</strong> Individual UI elements (buttons, sliders).</li>
+                <li><strong>Screens or Windows:</strong> The immediate interface the user sees.</li>
+                <li><strong>Navigation within the application:</strong> How users move between different parts.</li>
+                <li><strong>Environment:</strong> The broader context in which the application is used.</li>
+            </ul>
+            <div class="highlight-box">
+                <p>Crucial to consider both <strong>local</strong> and <strong>global structure</strong>.</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Local Structure in Navigation -->
+        <div class="slide">
+            <h2>Local Structure in Navigation</h2>
+            <h3>At all times, the user should clearly understand:</h3>
+            <ul>
+                <li><strong>Where am I?</strong> (Current location within the system)</li>
+                <li><strong>What can I do here?</strong> (Available actions and options)</li>
+                <li><strong>Where am I going / What will happen?</strong> (Outcome of potential actions)</li>
+                <li><strong>Where have I been / What have I done?</strong> (Recent history or completed actions)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 13: Global Structure in Navigation -->
+        <div class="slide">
+            <h2>Global Structure in Navigation</h2>
+            <ul>
+                <li><strong>Functional Organization:</strong> How the application's features and information are logically arranged.</li>
+                <li><strong>Information Architecture:</strong> Organizing information so users can easily learn and understand it.</li>
+                <li><strong>Dialog Patterns:</strong> The sequence of interactions, results of actions, understanding branches and loops.</li>
+                <li><strong>Task-Oriented Design:</strong> Structuring the application to support the user's primary tasks.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 14: Screen Design and Layout Fundamentals -->
+        <div class="slide">
+            <h2>Screen Design and Layout Fundamentals</h2>
+            <ul>
+                <li><strong>Ask:</strong> What is the user trying to achieve on this screen?</li>
+                <li><strong>Think:</strong> What information is essential for the user to perform that action?</li>
+            </ul>
+            <div class="highlight-box">
+                <h3>Design Principle</h3>
+                <p>Form follows function -- the layout should be driven by the required interaction.</p>
+            </div>
+        </div>
+
+        <!-- Slide 15: Tools for Effective Layout -->
+        <div class="slide">
+            <h2>Tools for Effective Layout</h2>
+            <ul>
+                <li><strong>Grouping and Structure:</strong> Logically organize related elements together.</li>
+                <li><strong>Order of Groups and Items:</strong> Arrange elements in an intuitive and meaningful sequence.</li>
+                <li><strong>Decoration:</strong> Use visual embellishments purposefully to enhance clarity, not clutter.</li>
+                <li><strong>Alignment:</strong> Create visual connections and order between elements.</li>
+                <li><strong>White Space:</strong> Use empty areas to improve readability, reduce cognitive load, and highlight important elements.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 16: User Action and Control -->
+        <div class="slide">
+            <h2>User Action and Control</h2>
+            <ul>
+                <li><strong>Entering Information:</strong> Design for ease of input and minimize errors.</li>
+                <li><strong>Knowing What to Do:</strong> Provide clear cues and guidance.</li>
+                <li><strong>Affordances:</strong> Design elements in a way that their function is obvious (e.g., a button looks clickable).</li>
+            </ul>
+        </div>
+        
+        <!-- Slide: Interactive Design Example -->
+        <div class="slide">
+            <h2>Interactive Design Example</h2>
+            <p>Experience these principles in action with this interactive example:</p>
+            
+            <div class="interactive-example">
+                <div class="color-picker">
+                    <h3>Color Theme Selector</h3>
+                    <p>Choose a theme color and see immediate visual feedback:</p>
+                    <div class="color-buttons">
+                        <button class="color-btn" data-color="#3498db">Blue</button>
+                        <button class="color-btn" data-color="#e74c3c">Red</button>
+                        <button class="color-btn" data-color="#2ecc71">Green</button>
+                        <button class="color-btn" data-color="#9b59b6">Purple</button>
+                    </div>
+                </div>
+                
+                <div class="preview-box">
+                    <div class="preview-header">Preview</div>
+                    <div class="preview-content">
+                        <h4>Welcome Message</h4>
+                        <p>This is how your selected theme would look in a real application.</p>
+                        <button class="action-btn">Action Button</button>
+                    </div>
+                </div>
+                
+                <div class="interaction-log">
+                    <h3>Interaction Log</h3>
+                    <div id="log-entries">Try interacting with the elements above!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Achieving Appropriate Appearance -->
+        <div class="slide">
+            <h2>Achieving Appropriate Appearance</h2>
+            <ul>
+                <li><strong>Presenting Information:</strong> Ensure clarity and effectiveness in how information is displayed.</li>
+                <li><strong>Aesthetics and Utility:</strong> Strive for a balance between visual appeal and practical usability.</li>
+                <li><strong>Color and 3D:</strong> Use these elements thoughtfully to enhance understanding and user experience.</li>
+                <li><strong>Localization / Internationalization:</strong> Design with consideration for different languages and cultural conventions.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 18: Iteration and Prototyping -->
+        <div class="slide">
+            <h2>Iteration and Prototyping</h2>
+            <div class="pros-cons">
+                <div class="pros">
+                    <h3>Formative Evaluation</h3>
+                    <p><strong>When:</strong> Repeatedly throughout the design process</p>
+                    <p><strong>Purpose:</strong> To improve designs based on ongoing feedback and testing</p>
+                </div>
+                <div class="cons">
+                    <h3>Summative Evaluation</h3>
+                    <p><strong>When:</strong> At the end of a design phase or project</p>
+                    <p><strong>Purpose:</strong> To determine the overall effectiveness of the design</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: Summary -->
+        <div class="slide">
+            <h2>Key Takeaways</h2>
+            <ul>
+                <li>Effective design is about achieving specific <strong>goals</strong> while working within given <strong>constraints</strong>.</li>
+                <li>The design process must begin with a thorough understanding of <strong>user requirements</strong>.</li>
+                <li>The use of <strong>scenarios</strong> is a valuable technique to aid in the design process.</li>
+                <li><strong>Navigation, screen design, and layout</strong> are critical aspects that significantly impact user experience.</li>
+                <li><strong>Iteration</strong> and continuous evaluation are essential components of a successful design process.</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">19</span>
+            </span>
+            <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = index + 1;
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').disabled = index === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            const newIndex = currentSlideIndex + direction;
+            
+            if (newIndex >= 0 && newIndex < totalSlides) {
+                currentSlideIndex = newIndex;
+                showSlide(currentSlideIndex);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (event.key === 'ArrowRight') {
+                changeSlide(1);
+            }
+        });
+
+        // Initialize the color buttons with their colors
+        document.addEventListener('DOMContentLoaded', function() {
+            const colorButtons = document.querySelectorAll('.color-btn');
+            const previewHeader = document.querySelector('.preview-header');
+            const previewContentH4 = document.querySelector('.preview-content h4');
+            const actionBtn = document.querySelector('.action-btn');
+            const logEntries = document.getElementById('log-entries');
+            
+            // Set initial button colors
+            colorButtons.forEach(button => {
+                const color = button.getAttribute('data-color');
+                button.style.backgroundColor = color;
+                
+                // Add click event listeners
+                button.addEventListener('click', function() {
+                    const selectedColor = this.getAttribute('data-color');
+                    
+                    // Update the preview elements with the selected color
+                    previewHeader.style.backgroundColor = selectedColor;
+                    previewContentH4.style.color = selectedColor;
+                    actionBtn.style.backgroundColor = selectedColor;
+                    
+                    // Add log entry
+                    addLogEntry(`Color changed to ${this.textContent} (${selectedColor})`);
+                });
+            });
+            
+            // Add click event for the action button
+            actionBtn.addEventListener('click', function() {
+                // Add animation effect to show user feedback
+                this.classList.add('clicked');
+                
+                // Add log entry
+                addLogEntry('Action button clicked');
+                
+                // Remove animation class after animation completes
+                setTimeout(() => {
+                    this.classList.remove('clicked');
+                }, 300);
+            });
+            
+            // Function to add entry to the interaction log
+            function addLogEntry(message) {
+                const timestamp = new Date().toLocaleTimeString();
+                const entry = document.createElement('div');
+                entry.textContent = `[${timestamp}] ${message}`;
+                
+                // Add new log at the top for better visibility
+                if (logEntries.firstChild) {
+                    logEntries.insertBefore(entry, logEntries.firstChild);
+                } else {
+                    logEntries.appendChild(entry);
+                }
+                
+                // Limit log entries to keep performance good
+                const entries = logEntries.querySelectorAll('div');
+                if (entries.length > 10) {
+                    logEntries.removeChild(entries[entries.length - 1]);
+                }
+            }
+            
+            // Add CSS for button click animation
+            const style = document.createElement('style');
+            style.textContent = `
+                .action-btn.clicked {
+                    transform: scale(0.95);
+                    opacity: 0.8;
+                }
+                
+                @media (max-width: 768px) {
+                    .interactive-example {
+                        grid-template-columns: 1fr;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
