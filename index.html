@@ -332,6 +332,18 @@
             }
         }
 
+        .slide-image {
+          display: block;
+          max-width: 80%; /* Or a suitable percentage to fit well */
+          height: auto;   /* Maintain aspect ratio */
+          margin-top: 25px; /* Space above the image */
+          margin-bottom: 15px; /* Space below the image */
+          margin-left: auto;
+          margin-right: auto;
+          border-radius: 8px; /* Optional: if you want slightly rounded corners */
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: for a subtle lift */
+        }
+
         /* Styles for the creators section */
         .creators-container {
           margin-top: 40px; /* Space above the creators section */
@@ -351,21 +363,6 @@
           text-align: center;
           width: 150px; /* Fixed width for each entry, adjust as needed */
           margin: 10px;
-        }
-
-        .creator-image {
-          width: 80px; /* Size of the image placeholder */
-          height: 80px;
-          background-color: #f0f0f0; /* Placeholder background */
-          border: 2px dashed #ccc; /* Placeholder border */
-          border-radius: 50%; /* Make it circular */
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-size: 0.8em;
-          color: #555;
-          padding: 5px; /* Padding for the placeholder text */
-          margin-bottom: 10px; /* Space between image and name */
         }
 
         .creator-name {
@@ -395,15 +392,12 @@
             <p style="font-size: 1.2em; margin-top: 30px;">Understanding and Creating Meaningful User Experiences</p>
             <div class="creators-container">
               <div class="creator-entry">
-                <div class="creator-image">[Image of a Clever Fox]</div>
                 <div class="creator-name">French Jame A. Riano</div>
               </div>
               <div class="creator-entry">
-                <div class="creator-image">[Image of an Agile Monkey]</div>
                 <div class="creator-name">Kim Escobar</div>
               </div>
               <div class="creator-entry">
-                <div class="creator-image">[Image of a Wise Owl]</div>
                 <div class="creator-name">Christian Xander Griba</div>
               </div>
             </div>
@@ -438,6 +432,7 @@
                 <li><strong>Time:</strong> How much time is available for development?</li>
                 <li><strong>Health / Safety / Legal:</strong> What regulations or issues must be considered?</li>
             </ul>
+            <img src="triangle.jfif" alt="Triangle design element" class="slide-image">
         </div>
 
         <!-- Slide 5: Trade-offs in Design -->
