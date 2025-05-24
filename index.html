@@ -490,6 +490,123 @@
             margin-bottom: 20px;
           }
         }
+
+        /* Styles for Slide 20: User Preferences Panel */
+        .user-preferences-panel {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 550px; /* Adjusted for better spacing */
+            margin: 20px auto;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .user-preferences-panel h3 {
+            font-size: 1.4em; /* Slightly smaller than slide h2 for hierarchy */
+            color: #34495e;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .pref-section {
+            margin-bottom: 25px;
+        }
+
+        .pref-section h4 {
+            font-size: 1.1em;
+            color: #3498db;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .pref-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px 0;
+        }
+
+        .pref-item label {
+            font-size: 1em;
+            color: #2c3e50;
+            flex-grow: 1;
+        }
+
+        .pref-item select,
+        .pref-item .toggle-switch {
+            min-width: 150px; /* Ensure enough space for localized text */
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #bdc3c7;
+            background-color: #fff;
+            font-size: 0.95em;
+        }
+
+        /* Basic Toggle Switch Style */
+        .toggle-switch {
+            display: inline-block;
+            position: relative;
+            width: 50px; /* Fixed width */
+            height: 26px; /* Fixed height */
+            background-color: #ccc;
+            border-radius: 13px; /* height / 2 */
+            cursor: pointer;
+            padding: 0; /* Override select padding */
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 20px; /* Smaller than height */
+            height: 20px; /* Smaller than height */
+            border-radius: 50%;
+            background-color: white;
+            top: 3px; /* (height - knobHeight) / 2 */
+            left: 3px; /* Initial position */
+            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+        
+        /* "On" state for toggle */
+        .toggle-switch.active {
+            background-color: #27ae60; /* Green when active */
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(24px); /* width - knobWidth - (2 * offset) */
+        }
+
+        .pref-sample-text {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #e8f4f8;
+            border: 1px solid #3498db;
+            border-radius: 8px;
+            text-align: center;
+            font-style: italic;
+            color: #2980b9;
+        }
+
+         @media (max-width: 600px) {
+            .user-preferences-panel {
+                padding: 20px;
+            }
+            .pref-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .pref-item label {
+                margin-bottom: 8px;
+            }
+            .pref-item select,
+            .pref-item .toggle-switch {
+                width: 100%; /* Full width on smaller screens */
+                min-width: 0; /* Reset min-width */
+            }
+        }
     </style>
 </head>
 <body>
@@ -799,11 +916,64 @@
             </ul>
         </div>
 
+        <!-- Slide 20: Example: Achieving Appropriate Appearance (User Preferences) -->
+        <div class="slide">
+            <h2>Example: Achieving Appropriate Appearance</h2>
+            <div class="user-preferences-panel">
+                <h3>User Preferences</h3>
+
+                <div class="pref-section">
+                    <h4>General</h4>
+                    <div class="pref-item">
+                        <label for="languageSelect">Language:</label>
+                        <select id="languageSelect" name="language">
+                            <option value="en-US">English (US)</option>
+                            <option value="es-ES">Español (ES)</option>
+                            <option value="fr-FR">Français (FR)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pref-section">
+                    <h4>Display Settings</h4>
+                    <div class="pref-item">
+                        <label for="themeSelect">Theme:</label>
+                        <select id="themeSelect" name="theme">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+                    <div class="pref-item">
+                        <label for="fontSizeSelect">Font Size:</label>
+                        <select id="fontSizeSelect" name="fontSize">
+                            <option value="small">Small</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pref-section">
+                    <h4>Notification Preferences</h4>
+                    <div class="pref-item">
+                        <label for="emailNotifToggle">Email Notifications:</label>
+                        <span class="toggle-switch active" id="emailNotifToggle" role="switch" aria-checked="true" tabindex="0"></span>
+                        <!-- The 'active' class and aria-checked would be toggled by JS in a real app -->
+                    </div>
+                </div>
+                
+                <div class="pref-sample-text" id="prefSampleText">
+                    Your preferences will be saved.
+                </div>
+            </div>
+        </div>
+
+
         <!-- Navigation -->
         <div class="navigation">
             <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
             <span class="slide-counter">
-                <span id="currentSlide">1</span> / <span id="totalSlides">19</span>
+                <span id="currentSlide">1</span> / <span id="totalSlides">20</span>
             </span>
             <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
         </div>
@@ -1069,6 +1239,44 @@
 
         // Initialize
         showSlide(0);
+
+        // Dummy toggle functionality for Slide 20 (visual only)
+        const emailToggle = document.getElementById('emailNotifToggle');
+        if (emailToggle) {
+            emailToggle.addEventListener('click', () => {
+                emailToggle.classList.toggle('active');
+                const isChecked = emailToggle.classList.contains('active');
+                emailToggle.setAttribute('aria-checked', isChecked.toString());
+            });
+            // Allow toggling with Space or Enter key for accessibility
+            emailToggle.addEventListener('keydown', (event) => {
+                if (event.key === ' ' || event.key === 'Enter') {
+                    event.preventDefault();
+                    emailToggle.click();
+                }
+            });
+        }
+
+        // Language change simulation for Slide 20 sample text
+        const languageSelect = document.getElementById('languageSelect');
+        const prefSampleText = document.getElementById('prefSampleText');
+        if (languageSelect && prefSampleText) {
+            languageSelect.addEventListener('change', function() {
+                switch(this.value) {
+                    case 'en-US':
+                        prefSampleText.textContent = 'Your preferences will be saved.';
+                        break;
+                    case 'es-ES':
+                        prefSampleText.textContent = 'Sus preferencias serán guardadas.';
+                        break;
+                    case 'fr-FR':
+                        prefSampleText.textContent = 'Vos préférences seront enregistrées.';
+                        break;
+                    default:
+                        prefSampleText.textContent = 'Your preferences will be saved.';
+                }
+            });
+        }
     </script>
 </body>
 </html>
