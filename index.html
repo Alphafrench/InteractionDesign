@@ -331,6 +331,60 @@
                 transform: translateX(50%);
             }
         }
+
+        /* Styles for the creators section */
+        .creators-container {
+          margin-top: 40px; /* Space above the creators section */
+          display: flex;
+          justify-content: space-around; /* Distribute creators evenly */
+          align-items: flex-start; /* Align items to the top */
+          flex-wrap: wrap; /* Allow wrapping on smaller screens */
+          padding: 20px;
+          background-color: rgba(255, 255, 255, 0.1); /* Subtle background to differentiate */
+          border-radius: 10px;
+        }
+
+        .creator-entry {
+          display: flex;
+          flex-direction: column; /* Stack image and name vertically */
+          align-items: center; /* Center items horizontally */
+          text-align: center;
+          width: 150px; /* Fixed width for each entry, adjust as needed */
+          margin: 10px;
+        }
+
+        .creator-image {
+          width: 80px; /* Size of the image placeholder */
+          height: 80px;
+          background-color: #f0f0f0; /* Placeholder background */
+          border: 2px dashed #ccc; /* Placeholder border */
+          border-radius: 50%; /* Make it circular */
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 0.8em;
+          color: #555;
+          padding: 5px; /* Padding for the placeholder text */
+          margin-bottom: 10px; /* Space between image and name */
+        }
+
+        .creator-name {
+          font-size: 0.9em;
+          color: #ffffff; /* White text to match title slide */
+          font-weight: 500;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+          .creators-container {
+            flex-direction: column; /* Stack creator entries vertically */
+            align-items: center; /* Center all entries */
+          }
+          .creator-entry {
+            width: 80%; /* Allow entries to take more width */
+            margin-bottom: 20px;
+          }
+        }
     </style>
 </head>
 <body>
@@ -339,6 +393,20 @@
         <div class="slide active title-slide">
             <h1>Interaction Design</h1>
             <p style="font-size: 1.2em; margin-top: 30px;">Understanding and Creating Meaningful User Experiences</p>
+            <div class="creators-container">
+              <div class="creator-entry">
+                <div class="creator-image">[Image of a Clever Fox]</div>
+                <div class="creator-name">French Jame A. Riano</div>
+              </div>
+              <div class="creator-entry">
+                <div class="creator-image">[Image of an Agile Monkey]</div>
+                <div class="creator-name">Kim Escobar</div>
+              </div>
+              <div class="creator-entry">
+                <div class="creator-image">[Image of a Wise Owl]</div>
+                <div class="creator-name">Christian Xander Griba</div>
+              </div>
+            </div>
         </div>
 
         <!-- Slide 2: What is Design? -->
