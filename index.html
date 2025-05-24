@@ -440,9 +440,10 @@
 /* Optional: if elements need to be absolutely positioned for some demos, ensure container is relative */
 /* .layout-demo-area.is-relative { position: relative; } */
 
+        /* General slide image style - can be used by multiple slides */
         .slide-image {
           display: block;
-          max-width: 80%; /* Or a suitable percentage to fit well */
+          max-width: 80%; /* Default max-width, can be overridden */
           height: auto;   /* Maintain aspect ratio */
           margin-top: 25px; /* Space above the image */
           margin-bottom: 15px; /* Space below the image */
@@ -451,6 +452,44 @@
           border-radius: 8px; /* Optional: if you want slightly rounded corners */
           box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: for a subtle lift */
         }
+
+        /* Styles for generic content-image layout (used by Slide 7, 9, etc.) */
+        .slide-content-image-container {
+            display: flex;
+            align-items: flex-start; /* Align items to the top */
+            gap: 20px; /* Space between text and image */
+            margin-top: 20px; /* Add some margin at the top of the container */
+        }
+
+        .slide-content-main {
+            flex: 3; /* Takes up more space */
+            text-align: left; /* Ensure text content aligns left */
+        }
+        .slide-content-main h2, .slide-content-main h3 {
+            text-align: left; /* Override general slide h2/h3 center alignment */
+        }
+         .slide-content-main ul {
+            margin-left: 0; /* Reset any auto margin from general ul */
+            max-width: none; /* Allow ul to take full width of its container */
+        }
+
+
+        .slide-image-container {
+            flex: 2; /* Takes up less space */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 20px; /* Add some padding to align better with text if h2 is tall */
+        }
+
+        .slide-image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+
 
         /* Styles for the creators section */
         .creators-container {
@@ -489,6 +528,30 @@
             width: 80%; /* Allow entries to take more width */
             margin-bottom: 20px;
           }
+        }
+
+        /* Responsive adjustments for generic content-image layout */
+        @media (max-width: 768px) {
+            .slide-content-image-container {
+                flex-direction: column;
+                align-items: center; /* Center items when stacked */
+            }
+            .slide-content-main,
+            .slide-image-container {
+                width: 100%; /* Take full width when stacked */
+                flex: none; /* Reset flex property */
+            }
+             .slide-content-main h2, .slide-content-main h3, .slide-content-main ul {
+                text-align: center; /* Center text on small screens */
+            }
+            .slide-content-main ul {
+                margin: 0 auto; /* Center the list itself */
+                padding-left: 40px; /* Add some padding for list items */
+            }
+            .slide-image-container {
+                 margin-top: 20px; /* Add some space when stacked */
+                 padding-top: 0; /* Reset padding */
+            }
         }
     </style>
 </head>
@@ -573,13 +636,20 @@
 
         <!-- Slide 7: Know Thy Users -->
         <div class="slide">
-            <h2>Know Thy Users</h2>
-            <h3>Stakeholders: Anyone affected by the system, directly or indirectly</h3>
-            <ul>
-                <li><strong>Talk to them:</strong> Engage in participatory design.</li>
-                <li><strong>Watch them:</strong> Observe their behaviors and context (ethnography).</li>
-                <li><strong>Use your imagination:</strong> Empathize with their needs and perspectives.</li>
-            </ul>
+            <div class="slide-content-image-container">
+                <div class="slide-content-main">
+                    <h2>Know Thy Users</h2>
+                    <h3>Stakeholders: Anyone affected by the system, directly or indirectly</h3>
+                    <ul>
+                        <li><strong>Talk to them:</strong> Engage in participatory design.</li>
+                        <li><strong>Watch them:</strong> Observe their behaviors and context (ethnography).</li>
+                        <li><strong>Use your imagination:</strong> Empathize with their needs and perspectives.</li>
+                    </ul>
+                </div>
+                <div class="slide-image-container">
+                    <img src="ex1.jpg" alt="User research illustration">
+                </div>
+            </div>
         </div>
 
         <!-- Slide 8: The Power of Scenarios -->
@@ -600,12 +670,19 @@
 
         <!-- Slide 9: Uses of Scenarios -->
         <div class="slide">
-            <h2>Uses of Scenarios</h2>
-            <ul>
-                <li><strong>Communication:</strong> Share understanding and ideas with team members and stakeholders.</li>
-                <li><strong>Validation:</strong> Check other design models against realistic user interactions.</li>
-                <li><strong>Expressing Dynamics:</strong> Show how the system behaves and responds over time and through different user actions.</li>
-            </ul>
+            <div class="slide-content-image-container">
+                <div class="slide-content-main">
+                    <h2>Uses of Scenarios</h2>
+                    <ul>
+                        <li><strong>Communication:</strong> Share understanding and ideas with team members and stakeholders.</li>
+                        <li><strong>Validation:</strong> Check other design models against realistic user interactions.</li>
+                        <li><strong>Expressing Dynamics:</strong> Show how the system behaves and responds over time and through different user actions.</li>
+                    </ul>
+                </div>
+                <div class="slide-image-container">
+                    <img src="ex2.jpg" alt="Scenario usage illustration">
+                </div>
+            </div>
         </div>
 
         <!-- Slide 10: Scenarios: Pros and Cons -->
@@ -678,8 +755,8 @@
         <div class="slide">
             <h2>Tools for Effective Layout</h2>
             <ul>
-                <li><strong>Grouping and Structure:</strong> Logically organize related elements together.</li>
-                <li><strong>Order of Groups and Items:</strong> Arrange elements in an intuitive and meaningful sequence.</li>
+                <li><strong>Grouping and Structure:</strong> Visually grouping related elements to create a clear and organized interface, making it easier for users to understand the relationships between different parts of the content.</li>
+                <li><strong>Order of Groups and Items:</strong> Arranging elements in a logical and intuitive sequence that follows user expectations and task flow, guiding them naturally through the content or actions.</li>
                 <li><strong>Decoration:</strong> Use visual embellishments purposefully to enhance clarity, not clutter.</li>
                 <li><strong>Alignment:</strong> Create visual connections and order between elements.</li>
                 <li><strong>White Space:</strong> Use empty areas to improve readability, reduce cognitive load, and highlight important elements.</li>
