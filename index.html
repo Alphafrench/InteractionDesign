@@ -332,6 +332,114 @@
             }
         }
 
+/* Styles for Interactive Layout Demo on Slide 16 */
+.layout-demo-container {
+  display: flex;
+  flex-direction: column; /* Stack demo area and controls vertically */
+  align-items: center; /* Center them on the slide */
+  gap: 20px; /* Space between demo area and controls */
+  margin-top: 20px;
+}
+
+.layout-demo-area {
+  width: 90%;
+  max-width: 600px;
+  min-height: 200px;
+  border: 2px dashed #3498db;
+  padding: 15px;
+  display: flex; /* Using flex for easy alignment and ordering */
+  justify-content: flex-start; /* Initial alignment */
+  align-items: flex-start; /* Initial alignment */
+  gap: 10px; /* Initial gap between demo elements */
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  flex-wrap: wrap; /* Allow wrapping if elements are too wide */
+}
+
+.demo-element {
+  width: 100px;
+  height: 60px;
+  padding: 10px;
+  border: 1px solid #2c3e50;
+  background-color: #e0e0e0;
+  color: #2c3e50;
+  font-size: 0.9em;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  transition: all 0.3s ease; /* For smooth transitions */
+  position: relative; /* For potential absolute positioning of decorations */
+}
+
+/* Specific initial styles for elements if needed for demo */
+#el1 { background-color: #f1c40f; }
+#el2 { background-color: #e67e22; }
+#el3 { background-color: #1abc9c; }
+#el4 { background-color: #9b59b6; color: white; }
+
+.layout-controls {
+  display: flex;
+  flex-wrap: wrap; /* Allow controls to wrap on smaller screens */
+  justify-content: center;
+  gap: 10px; /* Gap between control groups/buttons */
+  padding: 15px;
+  background-color: #ecf0f1;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+}
+
+.layout-controls button {
+  padding: 8px 12px;
+  font-size: 0.9em;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.layout-controls button:hover {
+  background-color: #2980b9;
+}
+
+.layout-controls fieldset {
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 5px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.layout-controls legend {
+  font-size: 0.85em;
+  font-weight: bold;
+  color: #34495e;
+  padding: 0 5px;
+}
+
+/* Utility classes for demonstrating principles */
+.group-visual { /* For Toggle Grouping */
+  border: 2px solid #27ae60; /* Green border for the group */
+  background-color: rgba(46, 204, 113, 0.1);
+  padding: 5px;
+  border-radius: 6px;
+  margin: -5px; /* Adjust to contain elements nicely */
+}
+
+.decorated-style { /* For Toggle Decoration */
+  box-shadow: 0 0 0 3px #e74c3c; /* Red outline/shadow */
+  /* Or: border: 3px solid #e74c3c; */
+}
+
+/* Optional: if elements need to be absolutely positioned for some demos, ensure container is relative */
+/* .layout-demo-area.is-relative { position: relative; } */
+
         .slide-image {
           display: block;
           max-width: 80%; /* Or a suitable percentage to fit well */
@@ -578,6 +686,36 @@
             </ul>
         </div>
 
+        <!-- Slide 16: Layout Principles in Action -->
+        <div class="slide">
+            <h2>Layout Principles in Action</h2>
+            <div class="layout-demo-container">
+                <div class="layout-demo-area" id="layoutDemoArea">
+                    <div class="demo-element" id="el1">Box 1</div>
+                    <div class="demo-element" id="el2">Box 2</div>
+                    <div class="demo-element" id="el3">Box 3</div>
+                    <div class="demo-element" id="el4">Box 4</div>
+                </div>
+                <div class="layout-controls">
+                    <button id="btnToggleGrouping">Toggle Grouping (1&2)</button>
+                    <button id="btnChangeOrder">Change Order</button>
+                    <button id="btnToggleDecoration">Toggle Decoration (Box 3)</button>
+                    <fieldset>
+                        <legend>Alignment (All Boxes)</legend>
+                        <button id="btnAlignLeft">Align Left</button>
+                        <button id="btnAlignCenter">Align Center</button>
+                        <button id="btnAlignRight">Align Right</button>
+                        <button id="btnAlignSpaceAround">Space Around</button>
+                    </fieldset>
+                    <fieldset>
+                        <legend>White Space (All Boxes)</legend>
+                        <button id="btnIncreaseWhiteSpace">Increase</button>
+                        <button id="btnDecreaseWhiteSpace">Decrease</button>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
         <!-- Slide 16: User Action and Control -->
         <div class="slide">
             <h2>User Action and Control</h2>
@@ -783,6 +921,150 @@
                 }
             `;
             document.head.appendChild(style);
+
+            // ---- Start of new JS for Interactive Layout Demo ----
+
+            const layoutDemoArea = document.getElementById('layoutDemoArea');
+
+            if (layoutDemoArea) { // Only run if the demo area is on the page
+                const el1 = document.getElementById('el1');
+                const el2 = document.getElementById('el2');
+                const el3 = document.getElementById('el3');
+                const el4 = document.getElementById('el4');
+                const demoElements = [el1, el2, el3, el4].filter(el => el != null); // Filter out nulls if some elements are missing
+
+                // --- Grouping ---
+                // Create a wrapper for el1 and el2 for grouping demonstration
+                const groupWrapper = document.createElement('div');
+                // We will insert it when grouping is active
+
+                let isGrouped = false;
+                const btnToggleGrouping = document.getElementById('btnToggleGrouping');
+                if (btnToggleGrouping) {
+                    btnToggleGrouping.addEventListener('click', () => {
+                        isGrouped = !isGrouped;
+                        if (isGrouped) {
+                            // Ensure el1 and el2 are direct children of layoutDemoArea before grouping
+                            if (el1 && el1.parentNode !== layoutDemoArea) layoutDemoArea.appendChild(el1);
+                            if (el2 && el2.parentNode !== layoutDemoArea) layoutDemoArea.appendChild(el2);
+
+                            if (el1 && el2) { // Only group if both elements exist
+                                layoutDemoArea.insertBefore(groupWrapper, el1); // Insert wrapper before el1
+                                groupWrapper.appendChild(el1);
+                                groupWrapper.appendChild(el2);
+                                groupWrapper.classList.add('group-visual');
+                                btnToggleGrouping.textContent = "Ungroup (1&2)";
+                            } else {
+                                isGrouped = false; // Reset if elements are not found
+                            }
+                        } else {
+                            // Unwrap el1 and el2
+                            if (el1) layoutDemoArea.insertBefore(el1, groupWrapper); // el1 before wrapper
+                            if (el2) layoutDemoArea.insertBefore(el2, groupWrapper); // el2 before wrapper
+                            if (groupWrapper.parentNode === layoutDemoArea) { // Check if groupWrapper is child of layoutDemoArea
+                                layoutDemoArea.removeChild(groupWrapper);
+                            }
+                            groupWrapper.classList.remove('group-visual');
+                            btnToggleGrouping.textContent = "Toggle Grouping (1&2)";
+                        }
+                    });
+                }
+
+                // --- Order ---
+                let orderState = 0;
+                const btnChangeOrder = document.getElementById('btnChangeOrder');
+                if (btnChangeOrder) {
+                    btnChangeOrder.addEventListener('click', () => {
+                        orderState = (orderState + 1) % 3;
+                        
+                        if (isGrouped && btnToggleGrouping) { 
+                             btnToggleGrouping.click(); 
+                        }
+                        // Ensure all demo elements are direct children of layoutDemoArea before reordering
+                        demoElements.forEach(el => {
+                            if (el && el.parentNode !== layoutDemoArea) {
+                                layoutDemoArea.appendChild(el);
+                            }
+                        });
+
+                        switch (orderState) {
+                            case 0: // Initial: 1, 2, 3, 4
+                                demoElements.forEach((el, i) => { if(el) el.style.order = i; });
+                                break;
+                            case 1: // New order: 4, 3, 2, 1
+                                demoElements.forEach((el, i) => { if(el) el.style.order = demoElements.length - 1 - i; });
+                                break;
+                            case 2: // Another order: 2, 3, 1, 4
+                                if(el1) el1.style.order = 2; 
+                                if(el2) el2.style.order = 0; 
+                                if(el3) el3.style.order = 1; 
+                                if(el4) el4.style.order = 3; 
+                                break;
+                        }
+                    });
+                }
+
+                // --- Decoration ---
+                let isDecorated = false;
+                const btnToggleDecoration = document.getElementById('btnToggleDecoration');
+                if (btnToggleDecoration && el3) {
+                    btnToggleDecoration.addEventListener('click', () => {
+                        isDecorated = !isDecorated;
+                        if (isDecorated) {
+                            el3.classList.add('decorated-style');
+                            btnToggleDecoration.textContent = "Remove Decoration (Box 3)";
+                        } else {
+                            el3.classList.remove('decorated-style');
+                            btnToggleDecoration.textContent = "Toggle Decoration (Box 3)";
+                        }
+                    });
+                }
+
+                // --- Alignment ---
+                const btnAlignLeft = document.getElementById('btnAlignLeft');
+                if(btnAlignLeft) btnAlignLeft.addEventListener('click', () => { layoutDemoArea.style.justifyContent = 'flex-start'; });
+                
+                const btnAlignCenter = document.getElementById('btnAlignCenter');
+                if(btnAlignCenter) btnAlignCenter.addEventListener('click', () => { layoutDemoArea.style.justifyContent = 'center'; });
+                
+                const btnAlignRight = document.getElementById('btnAlignRight');
+                if(btnAlignRight) btnAlignRight.addEventListener('click', () => { layoutDemoArea.style.justifyContent = 'flex-end'; });
+                
+                const btnAlignSpaceAround = document.getElementById('btnAlignSpaceAround');
+                if(btnAlignSpaceAround) btnAlignSpaceAround.addEventListener('click', () => { layoutDemoArea.style.justifyContent = 'space-around'; });
+
+
+                // --- White Space ---
+                let currentPadding = 10; 
+                let currentMargin = 10; 
+
+                const btnIncreaseWhiteSpace = document.getElementById('btnIncreaseWhiteSpace');
+                if(btnIncreaseWhiteSpace) {
+                    btnIncreaseWhiteSpace.addEventListener('click', () => {
+                        currentPadding += 5;
+                        currentMargin += 5;
+                        demoElements.forEach(el => {
+                            if(el) el.style.padding = `${currentPadding}px`;
+                        });
+                        layoutDemoArea.style.gap = `${currentMargin}px`;
+                    });
+                }
+
+                const btnDecreaseWhiteSpace = document.getElementById('btnDecreaseWhiteSpace');
+                if(btnDecreaseWhiteSpace) {
+                    btnDecreaseWhiteSpace.addEventListener('click', () => {
+                        currentPadding = Math.max(5, currentPadding - 5); 
+                        currentMargin = Math.max(5, currentMargin - 5); 
+                         demoElements.forEach(el => {
+                            if(el) el.style.padding = `${currentPadding}px`;
+                        });
+                        layoutDemoArea.style.gap = `${currentMargin}px`;
+                    });
+                }
+
+            } // End of if (layoutDemoArea)
+
+            // ---- End of new JS for Interactive Layout Demo ----
         });
 
         // Initialize
