@@ -440,10 +440,9 @@
 /* Optional: if elements need to be absolutely positioned for some demos, ensure container is relative */
 /* .layout-demo-area.is-relative { position: relative; } */
 
-        /* General slide image style - can be used by multiple slides */
         .slide-image {
           display: block;
-          max-width: 80%; /* Default max-width, can be overridden */
+          max-width: 80%; /* Or a suitable percentage to fit well */
           height: auto;   /* Maintain aspect ratio */
           margin-top: 25px; /* Space above the image */
           margin-bottom: 15px; /* Space below the image */
@@ -452,44 +451,6 @@
           border-radius: 8px; /* Optional: if you want slightly rounded corners */
           box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: for a subtle lift */
         }
-
-        /* Styles for generic content-image layout (used by Slide 7, 9, etc.) */
-        .slide-content-image-container {
-            display: flex;
-            align-items: flex-start; /* Align items to the top */
-            gap: 20px; /* Space between text and image */
-            margin-top: 20px; /* Add some margin at the top of the container */
-        }
-
-        .slide-content-main {
-            flex: 3; /* Takes up more space */
-            text-align: left; /* Ensure text content aligns left */
-        }
-        .slide-content-main h2, .slide-content-main h3 {
-            text-align: left; /* Override general slide h2/h3 center alignment */
-        }
-         .slide-content-main ul {
-            margin-left: 0; /* Reset any auto margin from general ul */
-            max-width: none; /* Allow ul to take full width of its container */
-        }
-
-
-        .slide-image-container {
-            flex: 2; /* Takes up less space */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding-top: 20px; /* Add some padding to align better with text if h2 is tall */
-        }
-
-        .slide-image-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-
 
         /* Styles for the creators section */
         .creators-container {
@@ -530,27 +491,205 @@
           }
         }
 
-        /* Responsive adjustments for generic content-image layout */
-        @media (max-width: 768px) {
-            .slide-content-image-container {
+        /* New Flexbox styles for top-right image placement */
+        .slide-content-wrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start; /* Aligns items to the top */
+            justify-content: space-between; /* Puts space between text and image columns */
+            width: 100%; /* Ensure wrapper takes full slide content width */
+        }
+
+        .text-column {
+            flex-grow: 1; /* Allows text column to expand */
+            margin-right: 20px; /* Space between text and image column */
+            /* Ensure existing ul styling within text-column is not negatively impacted */
+        }
+
+        .image-column-top-right {
+            flex-shrink: 0; /* Prevents this column from shrinking */
+            width: 35%;     /* Adjust as needed, e.g., 30%, 35%, 40% */
+            max-width: 250px; /* Optional: a max physical width */
+            /* No float needed here */
+        }
+
+        .image-top-right-styled {
+            display: block; /* Remove extra space below image */
+            max-width: 100%; /* Responsive within its column */
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Styles for right-floating image on Slide 7 */
+        .slide-image-right {
+            float: right;
+            margin-left: 20px; /* Space between text and image */
+            margin-top: 10px; /* Space above the image if text is short */
+            margin-bottom: 10px; /* Space below the image */
+            max-width: 45%;    /* Adjust percentage as needed to fit */
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        /* Add a clearfix for the slide content if text wrapping is an issue */
+        .slide ul::after { /* Assuming the list is the main content next to the image */
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        /* Styles for Slide 20: Image Grid for Examples */
+        .example-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+            gap: 20px; /* Space between grid items */
+            margin-top: 20px;
+            align-items: start; /* Align items to the start of the grid cell */
+        }
+        .example-grid-item {
+            text-align: center; /* Center caption text */
+            background-color: #f9f9f9; /* Light background for item */
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .example-grid-item img {
+            max-width: 100%; /* Make images responsive */
+            height: auto;   /* Maintain aspect ratio */
+            border: 1px solid #ddd; /* Light border around images */
+            border-radius: 4px;
+            margin-bottom: 10px; /* Space between image and caption */
+            max-height: 200px; /* Constrain image height to prevent overflow */
+            object-fit: contain; /* Ensure image is scaled within bounds without cropping */
+        }
+        .example-grid-item p {
+            font-size: 0.9em;
+            color: #333;
+            margin: 0; /* Reset default paragraph margin */
+            line-height: 1.4;
+        }
+        /* Media query for potentially larger layout on wider screens if needed */
+        @media (min-width: 600px) {
+            .example-grid-container {
+                grid-template-columns: 1fr 1fr; /* Force 2 columns on wider screens */
+            }
+        }
+
+        /* Styles for Slide 20: User Preferences Panel */
+        .user-preferences-panel {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 550px; /* Adjusted for better spacing */
+            margin: 20px auto;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .user-preferences-panel h3 {
+            font-size: 1.4em; /* Slightly smaller than slide h2 for hierarchy */
+            color: #34495e;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .pref-section {
+            margin-bottom: 25px;
+        }
+
+        .pref-section h4 {
+            font-size: 1.1em;
+            color: #3498db;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .pref-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px 0;
+        }
+
+        .pref-item label {
+            font-size: 1em;
+            color: #2c3e50;
+            flex-grow: 1;
+        }
+
+        .pref-item select,
+        .pref-item .toggle-switch {
+            min-width: 150px; /* Ensure enough space for localized text */
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #bdc3c7;
+            background-color: #fff;
+            font-size: 0.95em;
+        }
+
+        /* Basic Toggle Switch Style */
+        .toggle-switch {
+            display: inline-block;
+            position: relative;
+            width: 50px; /* Fixed width */
+            height: 26px; /* Fixed height */
+            background-color: #ccc;
+            border-radius: 13px; /* height / 2 */
+            cursor: pointer;
+            padding: 0; /* Override select padding */
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 20px; /* Smaller than height */
+            height: 20px; /* Smaller than height */
+            border-radius: 50%;
+            background-color: white;
+            top: 3px; /* (height - knobHeight) / 2 */
+            left: 3px; /* Initial position */
+            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+        
+        /* "On" state for toggle */
+        .toggle-switch.active {
+            background-color: #27ae60; /* Green when active */
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(24px); /* width - knobWidth - (2 * offset) */
+        }
+
+        .pref-sample-text {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #e8f4f8;
+            border: 1px solid #3498db;
+            border-radius: 8px;
+            text-align: center;
+            font-style: italic;
+            color: #2980b9;
+        }
+
+         @media (max-width: 600px) {
+            .user-preferences-panel {
+                padding: 20px;
+            }
+            .pref-item {
                 flex-direction: column;
-                align-items: center; /* Center items when stacked */
+                align-items: flex-start;
             }
-            .slide-content-main,
-            .slide-image-container {
-                width: 100%; /* Take full width when stacked */
-                flex: none; /* Reset flex property */
+            .pref-item label {
+                margin-bottom: 8px;
             }
-             .slide-content-main h2, .slide-content-main h3, .slide-content-main ul {
-                text-align: center; /* Center text on small screens */
-            }
-            .slide-content-main ul {
-                margin: 0 auto; /* Center the list itself */
-                padding-left: 40px; /* Add some padding for list items */
-            }
-            .slide-image-container {
-                 margin-top: 20px; /* Add some space when stacked */
-                 padding-top: 0; /* Reset padding */
+            .pref-item select,
+            .pref-item .toggle-switch {
+                width: 100%; /* Full width on smaller screens */
+                min-width: 0; /* Reset min-width */
             }
         }
     </style>
@@ -596,14 +735,20 @@
         <!-- Slide 4: Constraints in Design -->
         <div class="slide">
             <h2>Constraints in Design</h2>
-            <ul>
-                <li><strong>Materials:</strong> What will we use to build it?</li>
-                <li><strong>Standards:</strong> What established guidelines must we follow?</li>
-                <li><strong>Cost:</strong> What is the budget?</li>
-                <li><strong>Time:</strong> How much time is available for development?</li>
-                <li><strong>Health / Safety / Legal:</strong> What regulations or issues must be considered?</li>
-            </ul>
-            <img src="triangle.jfif" alt="Triangle design element" class="slide-image">
+            <div class="slide-content-wrapper">
+                <div class="text-column">
+                    <ul>
+                        <li><strong>Materials:</strong> What will we use to build it?</li>
+                        <li><strong>Standards:</strong> What established guidelines must we follow?</li>
+                        <li><strong>Cost:</strong> What is the budget?</li>
+                        <li><strong>Time:</strong> How much time is available for development?</li>
+                        <li><strong>Health / Safety / Legal:</strong> What regulations or issues must be considered?</li>
+                    </ul>
+                </div>
+                <div class="image-column-top-right">
+                    <img src="triangle.jfif" alt="Triangle design element" class="image-top-right-styled">
+                </div>
+            </div>
         </div>
 
         <!-- Slide 5: Trade-offs in Design -->
@@ -636,9 +781,9 @@
 
         <!-- Slide 7: Know Thy Users -->
         <div class="slide">
-            <div class="slide-content-image-container">
-                <div class="slide-content-main">
-                    <h2>Know Thy Users</h2>
+            <h2>Know Thy Users</h2>
+            <div class="slide-content-wrapper">
+                <div class="text-column">
                     <h3>Stakeholders: Anyone affected by the system, directly or indirectly</h3>
                     <ul>
                         <li><strong>Talk to them:</strong> Engage in participatory design.</li>
@@ -646,8 +791,8 @@
                         <li><strong>Use your imagination:</strong> Empathize with their needs and perspectives.</li>
                     </ul>
                 </div>
-                <div class="slide-image-container">
-                    <img src="ex1.jpg" alt="User research illustration">
+                <div class="image-column-top-right">
+                    <img src="ex1.jpg" alt="Illustration for Know Thy Users" class="image-top-right-styled">
                 </div>
             </div>
         </div>
@@ -670,17 +815,17 @@
 
         <!-- Slide 9: Uses of Scenarios -->
         <div class="slide">
-            <div class="slide-content-image-container">
-                <div class="slide-content-main">
-                    <h2>Uses of Scenarios</h2>
+            <h2>Uses of Scenarios</h2>
+            <div class="slide-content-wrapper">
+                <div class="text-column">
                     <ul>
                         <li><strong>Communication:</strong> Share understanding and ideas with team members and stakeholders.</li>
                         <li><strong>Validation:</strong> Check other design models against realistic user interactions.</li>
                         <li><strong>Expressing Dynamics:</strong> Show how the system behaves and responds over time and through different user actions.</li>
                     </ul>
                 </div>
-                <div class="slide-image-container">
-                    <img src="ex2.jpg" alt="Scenario usage illustration">
+                <div class="image-column-top-right">
+                    <img src="ex2.jpg" alt="Illustration for Uses of Scenarios" class="image-top-right-styled">
                 </div>
             </div>
         </div>
@@ -755,8 +900,8 @@
         <div class="slide">
             <h2>Tools for Effective Layout</h2>
             <ul>
-                <li><strong>Grouping and Structure:</strong> Visually grouping related elements to create a clear and organized interface, making it easier for users to understand the relationships between different parts of the content.</li>
-                <li><strong>Order of Groups and Items:</strong> Arranging elements in a logical and intuitive sequence that follows user expectations and task flow, guiding them naturally through the content or actions.</li>
+                <li><strong>Grouping and Structure:</strong> Logically organize related elements together.</li>
+                <li><strong>Order of Groups and Items:</strong> Arrange elements in an intuitive and meaningful sequence.</li>
                 <li><strong>Decoration:</strong> Use visual embellishments purposefully to enhance clarity, not clutter.</li>
                 <li><strong>Alignment:</strong> Create visual connections and order between elements.</li>
                 <li><strong>White Space:</strong> Use empty areas to improve readability, reduce cognitive load, and highlight important elements.</li>
@@ -847,7 +992,90 @@
             </ul>
         </div>
 
-        <!-- Slide 18: Iteration and Prototyping -->
+        <!-- Slide 18: User Action and Control -->
+        <div class="slide">
+            <h2>User Action and Control</h2>
+            <ul>
+                <li><strong>Entering Information:</strong> Design for ease of input and minimize errors.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 20: Examples: Achieving Appropriate Appearance -->
+        <div class="slide">
+            <h2>Examples: Achieving Appropriate Appearance</h2>
+            <div class="example-grid-container">
+                <div class="example-grid-item">
+                    <img src="https://raw.githubusercontent.com/Alphafrench/InteractionDesign/main/Screenshot_20250525_094440.jpg" alt="Example of Presenting Information">
+                    <p>Presenting Information: Clear and effective display.</p>
+                </div>
+                <div class="example-grid-item">
+                    <img src="https://raw.githubusercontent.com/Alphafrench/InteractionDesign/main/Screenshot_20250525_094458.jpg" alt="Example of Aesthetics and Utility">
+                    <p>Aesthetics and Utility: Visual appeal and practical usability.</p>
+                </div>
+                <div class="example-grid-item">
+                    <img src="https://raw.githubusercontent.com/Alphafrench/InteractionDesign/main/Screenshot_20250525_094513.jpg" alt="Example of Color and 3D">
+                    <p>Color and 3D: Thoughtful use for understanding.</p>
+                </div>
+                <div class="example-grid-item">
+                    <img src="https://raw.githubusercontent.com/Alphafrench/InteractionDesign/main/Screenshot_20250525_094730.jpg" alt="Example of Localization/Internationalization">
+                    <p>Localization/Internationalization: Designing for different languages.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 21: Example: Achieving Appropriate Appearance (User Preferences) -->
+        <div class="slide">
+            <h2>Example: Achieving Appropriate Appearance</h2>
+            <div class="user-preferences-panel">
+                <h3>User Preferences</h3>
+
+                <div class="pref-section">
+                    <h4>General</h4>
+                    <div class="pref-item">
+                        <label for="languageSelect">Language:</label>
+                        <select id="languageSelect" name="language">
+                            <option value="en-US">English (US)</option>
+                            <option value="es-ES">Español (ES)</option>
+                            <option value="fr-FR">Français (FR)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pref-section">
+                    <h4>Display Settings</h4>
+                    <div class="pref-item">
+                        <label for="themeSelect">Theme:</label>
+                        <select id="themeSelect" name="theme">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+                    <div class="pref-item">
+                        <label for="fontSizeSelect">Font Size:</label>
+                        <select id="fontSizeSelect" name="fontSize">
+                            <option value="small">Small</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pref-section">
+                    <h4>Notification Preferences</h4>
+                    <div class="pref-item">
+                        <label for="emailNotifToggle">Email Notifications:</label>
+                        <span class="toggle-switch active" id="emailNotifToggle" role="switch" aria-checked="true" tabindex="0"></span>
+                        <!-- The 'active' class and aria-checked would be toggled by JS in a real app -->
+                    </div>
+                </div>
+                
+                <div class="pref-sample-text" id="prefSampleText">
+                    Your preferences will be saved.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 22: Iteration and Prototyping -->
         <div class="slide">
             <h2>Iteration and Prototyping</h2>
             <div class="pros-cons">
@@ -864,7 +1092,7 @@
             </div>
         </div>
 
-        <!-- Slide 19: Summary -->
+        <!-- Slide 23: Summary -->
         <div class="slide">
             <h2>Key Takeaways</h2>
             <ul>
@@ -876,11 +1104,12 @@
             </ul>
         </div>
 
+
         <!-- Navigation -->
         <div class="navigation">
             <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
             <span class="slide-counter">
-                <span id="currentSlide">1</span> / <span id="totalSlides">19</span>
+                <span id="currentSlide">1</span> / <span id="totalSlides">20</span>
             </span>
             <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
         </div>
@@ -1146,6 +1375,44 @@
 
         // Initialize
         showSlide(0);
+
+        // Dummy toggle functionality for Slide 20 (visual only)
+        const emailToggle = document.getElementById('emailNotifToggle');
+        if (emailToggle) {
+            emailToggle.addEventListener('click', () => {
+                emailToggle.classList.toggle('active');
+                const isChecked = emailToggle.classList.contains('active');
+                emailToggle.setAttribute('aria-checked', isChecked.toString());
+            });
+            // Allow toggling with Space or Enter key for accessibility
+            emailToggle.addEventListener('keydown', (event) => {
+                if (event.key === ' ' || event.key === 'Enter') {
+                    event.preventDefault();
+                    emailToggle.click();
+                }
+            });
+        }
+
+        // Language change simulation for Slide 20 sample text
+        const languageSelect = document.getElementById('languageSelect');
+        const prefSampleText = document.getElementById('prefSampleText');
+        if (languageSelect && prefSampleText) {
+            languageSelect.addEventListener('change', function() {
+                switch(this.value) {
+                    case 'en-US':
+                        prefSampleText.textContent = 'Your preferences will be saved.';
+                        break;
+                    case 'es-ES':
+                        prefSampleText.textContent = 'Sus preferencias serán guardadas.';
+                        break;
+                    case 'fr-FR':
+                        prefSampleText.textContent = 'Vos préférences seront enregistrées.';
+                        break;
+                    default:
+                        prefSampleText.textContent = 'Your preferences will be saved.';
+                }
+            });
+        }
     </script>
 </body>
 </html>
