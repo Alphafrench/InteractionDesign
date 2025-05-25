@@ -498,6 +498,43 @@
             display: block; /* Ensure it behaves as a block for margin auto to work as expected */
         }
 
+        /* Styles for Slide 20: Image Grid for Examples */
+        .example-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+            gap: 20px; /* Space between grid items */
+            margin-top: 20px;
+            align-items: start; /* Align items to the start of the grid cell */
+        }
+        .example-grid-item {
+            text-align: center; /* Center caption text */
+            background-color: #f9f9f9; /* Light background for item */
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .example-grid-item img {
+            max-width: 100%; /* Make images responsive */
+            height: auto;   /* Maintain aspect ratio */
+            border: 1px solid #ddd; /* Light border around images */
+            border-radius: 4px;
+            margin-bottom: 10px; /* Space between image and caption */
+            max-height: 200px; /* Constrain image height to prevent overflow */
+            object-fit: contain; /* Ensure image is scaled within bounds without cropping */
+        }
+        .example-grid-item p {
+            font-size: 0.9em;
+            color: #333;
+            margin: 0; /* Reset default paragraph margin */
+            line-height: 1.4;
+        }
+        /* Media query for potentially larger layout on wider screens if needed */
+        @media (min-width: 600px) {
+            .example-grid-container {
+                grid-template-columns: 1fr 1fr; /* Force 2 columns on wider screens */
+            }
+        }
+
         /* Styles for Slide 20: User Preferences Panel */
         .user-preferences-panel {
             background-color: #f8f9fa;
@@ -902,7 +939,30 @@
             </ul>
         </div>
 
-        <!-- Slide 19: Example: Achieving Appropriate Appearance (User Preferences) -->
+        <!-- Slide 20: Examples: Achieving Appropriate Appearance -->
+        <div class="slide">
+            <h2>Examples: Achieving Appropriate Appearance</h2>
+            <div class="example-grid-container">
+                <div class="example-grid-item">
+                    <img src="https://raw.githubusercontent.com/Alphafrench/InteractionDesign/main/Screenshot_20250525_094440.jpg" alt="Example of Presenting Information">
+                    <p>Presenting Information: Clear and effective display.</p>
+                </div>
+                <div class="example-grid-item">
+                    <img src="https://raw.githubusercontent.com/Alphafrench/InteractionDesign/main/Screenshot_20250525_094458.jpg" alt="Example of Aesthetics and Utility">
+                    <p>Aesthetics and Utility: Visual appeal and practical usability.</p>
+                </div>
+                <div class="example-grid-item">
+                    <img src="https://raw.githubusercontent.com/Alphafrench/InteractionDesign/main/Screenshot_20250525_094513.jpg" alt="Example of Color and 3D">
+                    <p>Color and 3D: Thoughtful use for understanding.</p>
+                </div>
+                <div class="example-grid-item">
+                    <img src="https://raw.githubusercontent.com/Alphafrench/InteractionDesign/main/Screenshot_20250525_094730.jpg" alt="Example of Localization/Internationalization">
+                    <p>Localization/Internationalization: Designing for different languages.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 21: Example: Achieving Appropriate Appearance (User Preferences) -->
         <div class="slide">
             <h2>Example: Achieving Appropriate Appearance</h2>
             <div class="user-preferences-panel">
@@ -954,7 +1014,7 @@
             </div>
         </div>
 
-        <!-- Slide 20: Iteration and Prototyping -->
+        <!-- Slide 22: Iteration and Prototyping -->
         <div class="slide">
             <h2>Iteration and Prototyping</h2>
             <div class="pros-cons">
@@ -971,7 +1031,7 @@
             </div>
         </div>
 
-        <!-- Slide 21: Summary -->
+        <!-- Slide 23: Summary -->
         <div class="slide">
             <h2>Key Takeaways</h2>
             <ul>
