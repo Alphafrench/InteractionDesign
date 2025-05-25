@@ -491,13 +491,34 @@
           }
         }
 
-        /* Specific style for left-aligning the triangle image on Slide 4 */
-        #triangle-image-slide4 {
-            margin-left: auto; /* Align to the right */
-            margin-right: 0;   /* Align to the right */
-            display: block;    /* Ensure block behavior for margins */
-            clear: both;       /* Add clear both to see if it helps with text flow */
-            margin-top: 15px;  /* Add some margin to separate from text above if any */
+        /* New Flexbox styles for top-right image placement */
+        .slide-content-wrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start; /* Aligns items to the top */
+            justify-content: space-between; /* Puts space between text and image columns */
+            width: 100%; /* Ensure wrapper takes full slide content width */
+        }
+
+        .text-column {
+            flex-grow: 1; /* Allows text column to expand */
+            margin-right: 20px; /* Space between text and image column */
+            /* Ensure existing ul styling within text-column is not negatively impacted */
+        }
+
+        .image-column-top-right {
+            flex-shrink: 0; /* Prevents this column from shrinking */
+            width: 35%;     /* Adjust as needed, e.g., 30%, 35%, 40% */
+            max-width: 250px; /* Optional: a max physical width */
+            /* No float needed here */
+        }
+
+        .image-top-right-styled {
+            display: block; /* Remove extra space below image */
+            max-width: 100%; /* Responsive within its column */
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         /* Styles for right-floating image on Slide 7 */
@@ -714,14 +735,20 @@
         <!-- Slide 4: Constraints in Design -->
         <div class="slide">
             <h2>Constraints in Design</h2>
-            <ul>
-                <li><strong>Materials:</strong> What will we use to build it?</li>
-                <li><strong>Standards:</strong> What established guidelines must we follow?</li>
-                <li><strong>Cost:</strong> What is the budget?</li>
-                <li><strong>Time:</strong> How much time is available for development?</li>
-                <li><strong>Health / Safety / Legal:</strong> What regulations or issues must be considered?</li>
-            </ul>
-            <img src="triangle.jfif" alt="Triangle design element" class="slide-image" id="triangle-image-slide4">
+            <div class="slide-content-wrapper">
+                <div class="text-column">
+                    <ul>
+                        <li><strong>Materials:</strong> What will we use to build it?</li>
+                        <li><strong>Standards:</strong> What established guidelines must we follow?</li>
+                        <li><strong>Cost:</strong> What is the budget?</li>
+                        <li><strong>Time:</strong> How much time is available for development?</li>
+                        <li><strong>Health / Safety / Legal:</strong> What regulations or issues must be considered?</li>
+                    </ul>
+                </div>
+                <div class="image-column-top-right">
+                    <img src="triangle.jfif" alt="Triangle design element" class="image-top-right-styled">
+                </div>
+            </div>
         </div>
 
         <!-- Slide 5: Trade-offs in Design -->
@@ -755,13 +782,19 @@
         <!-- Slide 7: Know Thy Users -->
         <div class="slide">
             <h2>Know Thy Users</h2>
-            <h3>Stakeholders: Anyone affected by the system, directly or indirectly</h3>
-            <ul>
-                <li><strong>Talk to them:</strong> Engage in participatory design.</li>
-                <li><strong>Watch them:</strong> Observe their behaviors and context (ethnography).</li>
-                <li><strong>Use your imagination:</strong> Empathize with their needs and perspectives.</li>
-            </ul>
-            <img src="ex1.jpg" alt="Illustration for Know Thy Users" class="slide-image-right">
+            <div class="slide-content-wrapper">
+                <div class="text-column">
+                    <h3>Stakeholders: Anyone affected by the system, directly or indirectly</h3>
+                    <ul>
+                        <li><strong>Talk to them:</strong> Engage in participatory design.</li>
+                        <li><strong>Watch them:</strong> Observe their behaviors and context (ethnography).</li>
+                        <li><strong>Use your imagination:</strong> Empathize with their needs and perspectives.</li>
+                    </ul>
+                </div>
+                <div class="image-column-top-right">
+                    <img src="ex1.jpg" alt="Illustration for Know Thy Users" class="image-top-right-styled">
+                </div>
+            </div>
         </div>
 
         <!-- Slide 8: The Power of Scenarios -->
@@ -783,12 +816,18 @@
         <!-- Slide 9: Uses of Scenarios -->
         <div class="slide">
             <h2>Uses of Scenarios</h2>
-            <ul>
-                <li><strong>Communication:</strong> Share understanding and ideas with team members and stakeholders.</li>
-                <li><strong>Validation:</strong> Check other design models against realistic user interactions.</li>
-                <li><strong>Expressing Dynamics:</strong> Show how the system behaves and responds over time and through different user actions.</li>
-            </ul>
-            <img src="ex2.jpg" alt="Illustration for Uses of Scenarios" class="slide-image-right">
+            <div class="slide-content-wrapper">
+                <div class="text-column">
+                    <ul>
+                        <li><strong>Communication:</strong> Share understanding and ideas with team members and stakeholders.</li>
+                        <li><strong>Validation:</strong> Check other design models against realistic user interactions.</li>
+                        <li><strong>Expressing Dynamics:</strong> Show how the system behaves and responds over time and through different user actions.</li>
+                    </ul>
+                </div>
+                <div class="image-column-top-right">
+                    <img src="ex2.jpg" alt="Illustration for Uses of Scenarios" class="image-top-right-styled">
+                </div>
+            </div>
         </div>
 
         <!-- Slide 10: Scenarios: Pros and Cons -->
