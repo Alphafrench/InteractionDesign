@@ -493,9 +493,29 @@
 
         /* Specific style for left-aligning the triangle image on Slide 4 */
         #triangle-image-slide4 {
-            margin-left: 0; /* Align to the left */
-            margin-right: auto; /* Keep right margin auto to prevent full width stretch if parent is flex */
-            display: block; /* Ensure it behaves as a block for margin auto to work as expected */
+            margin-left: auto; /* Align to the right */
+            margin-right: 0;   /* Align to the right */
+            display: block;    /* Ensure block behavior for margins */
+            clear: both;       /* Add clear both to see if it helps with text flow */
+            margin-top: 15px;  /* Add some margin to separate from text above if any */
+        }
+
+        /* Styles for right-floating image on Slide 7 */
+        .slide-image-right {
+            float: right;
+            margin-left: 20px; /* Space between text and image */
+            margin-top: 10px; /* Space above the image if text is short */
+            margin-bottom: 10px; /* Space below the image */
+            max-width: 45%;    /* Adjust percentage as needed to fit */
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        /* Add a clearfix for the slide content if text wrapping is an issue */
+        .slide ul::after { /* Assuming the list is the main content next to the image */
+            content: "";
+            clear: both;
+            display: table;
         }
 
         /* Styles for Slide 20: Image Grid for Examples */
@@ -741,6 +761,7 @@
                 <li><strong>Watch them:</strong> Observe their behaviors and context (ethnography).</li>
                 <li><strong>Use your imagination:</strong> Empathize with their needs and perspectives.</li>
             </ul>
+            <img src="ex1.jpg" alt="Illustration for Know Thy Users" class="slide-image-right">
         </div>
 
         <!-- Slide 8: The Power of Scenarios -->
@@ -767,6 +788,7 @@
                 <li><strong>Validation:</strong> Check other design models against realistic user interactions.</li>
                 <li><strong>Expressing Dynamics:</strong> Show how the system behaves and responds over time and through different user actions.</li>
             </ul>
+            <img src="ex2.jpg" alt="Illustration for Uses of Scenarios" class="slide-image-right">
         </div>
 
         <!-- Slide 10: Scenarios: Pros and Cons -->
